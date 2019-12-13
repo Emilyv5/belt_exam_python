@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
+import json
 import re
 
 
@@ -35,10 +36,35 @@ class User(models.Model):
 	password = models.CharField(max_length = 45)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-
+	# jobs_uploaded
+	# jobs_do
 	objects = UserManager()
 
-# class BookManager(models.Manager):
+class JobManager(models.Manager):
+	def basic_validator(self, postData):
+		errors = {}
+		if len(postData['title']) < 3:
+			errors['title'] = 'title must be at least 3 characters'
+		if len(postData['desc']) < 3:
+			errors['desc'] = 'Description must be at least 3 characters'
+		if len(postData['loc']) < 3:
+			errors['loc'] = 'Locations must be at least 3 characters'
+		return errors
+
+
+class Job(models.Model):
+	title = models.CharField(max_length = 45)
+	desc = models.TextField()
+	loc = models.CharField(max_length = 45)
+	cat = models. CharField(max_length = 45)
+	uploaded_by = models.ForeignKey(User, related_name = 'jobs_uploaded', on_delete = models.CASCADE)
+	user_who_do = models.ForeignKey(User, related_name = 'jobs_do', on_delete = models.CASCADE, null = True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	objects = JobManager()
+
+# class JobManager(models.Manager):
 # 	def basic_validator(self, postData):
 # 		errors = {}
 # 		if len(postData['title']) == 0:

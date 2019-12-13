@@ -11,12 +11,7 @@
 		<link rel="stylesheet" href="{% static 'css/style.css' %}">
 	</head>
 	<body>
-		<h2>Welcome! Sign in to manage your jobs!</h2>
-		<ul>
-			{{wrong}}
-		</ul>
-		
-		
+		<h2>Helllo Jon! Create a Job!</h2> <a href="/logout" style="margin-left: 40%;">Logout</a>
 		{% if messages %}
 			<ul class="messages">
 				{% for message in messages %}
@@ -24,40 +19,32 @@
 				{% endfor %}
 			</ul>
 		{% endif %}
-		<div style="display: inline-block; vertical-align: top; border-color: black; border-style: solid; border-width: thin; margin-left: 2%;">
-			<h3 style="margin-left: 20%;">Registration</h3>
-			<form action="/addition" method="POST">
+		<div style="display: block; vertical-align: top;">
+			
+			<form action="/addjob" method="POST">
 				{% csrf_token %}
-				<label> First Name</label>
-				<input type="text" name="first_name">
+				<label> Title: </label>
+				<input type="text" name="title">
 				<br>
-				<label> Last  Name</label>
-				<input type="text" name="last_name">
+				<label> Description: </label>
+				<input type="text" name="desc">
 				<br>
-				<label> Email </label>
-				<input type="text" name="email">
+				<label> Location: </label>
+				<input type="text" name="loc">
 				<br>
-				<label> Password </label>
-				<input type="text" name="password">
+				<label> Category: </label>
 				<br>
-				<label> Confirm Password</label>
-				<input type="text" name="confirm_password">
+				<input type="checkbox" name="cat" value="Pet care" /> Pet care
 				<br>
-				<input type="submit" value="Register" style="margin-left: 66%;">
+				<input type="checkbox" name="cat" value="Electrical" /> Electrical
+				<br>
+				<input type="checkbox" name="cat" value="Garden" /> Garden
+				<br>
+				<label> Other: </label>
+				<input type="text" name="cat">
+				<br>
+				<a href="cancel">Cancel</a> <input type="submit" value="Submit">
 			</form>
+			
 		</div>
-		<div style="display: inline-block; vertical-align: top; border-color: black; border-style: solid; border-width: thin; margin-left: 1%;">
-			<h3 style="margin-left: 20%;">Login</h3>
-			<form action="/check" method="POST">
-				{% csrf_token %}
-				<label> Email </label>
-				<input type="text" name="email">
-				<br>
-				<label> Password </label>
-				<input type="text" name="password">
-				<br>
-				<input type="submit" style="margin-left: 66%;" value="Log In">
-			</form>
-		</div>
-		
 	</body>

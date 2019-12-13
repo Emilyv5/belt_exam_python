@@ -11,12 +11,6 @@
 		<link rel="stylesheet" href="{% static 'css/style.css' %}">
 	</head>
 	<body>
-		<h2>Welcome! Sign in to manage your jobs!</h2>
-		<ul>
-			{{wrong}}
-		</ul>
-		
-		
 		{% if messages %}
 			<ul class="messages">
 				{% for message in messages %}
@@ -24,39 +18,22 @@
 				{% endfor %}
 			</ul>
 		{% endif %}
-		<div style="display: inline-block; vertical-align: top; border-color: black; border-style: solid; border-width: thin; margin-left: 2%;">
-			<h3 style="margin-left: 20%;">Registration</h3>
-			<form action="/addition" method="POST">
+		<div style="display: block; vertical-align: top;">
+			<h3>Hello {{user.first_name}}! Let's edit your job!</h3> <a href="/logout" style="margin-left: 30%;">Logout</a>
+			<form action="/edit/{{job.id}}" method="POST">
 				{% csrf_token %}
-				<label> First Name</label>
-				<input type="text" name="first_name">
+				<label>Title</label>
+				<input type="text" name="title" value ='{{job.title}}'>
 				<br>
-				<label> Last  Name</label>
-				<input type="text" name="last_name">
+				<label>Description:</label>
+				<textarea name='desc' cols="30" rows="4" >
+				{{job.desc}}
+				</textarea>
 				<br>
-				<label> Email </label>
-				<input type="text" name="email">
+				<label>Location</label>
+				<input type="text" name="loc" value ='{{job.loc}}'>
 				<br>
-				<label> Password </label>
-				<input type="text" name="password">
-				<br>
-				<label> Confirm Password</label>
-				<input type="text" name="confirm_password">
-				<br>
-				<input type="submit" value="Register" style="margin-left: 66%;">
-			</form>
-		</div>
-		<div style="display: inline-block; vertical-align: top; border-color: black; border-style: solid; border-width: thin; margin-left: 1%;">
-			<h3 style="margin-left: 20%;">Login</h3>
-			<form action="/check" method="POST">
-				{% csrf_token %}
-				<label> Email </label>
-				<input type="text" name="email">
-				<br>
-				<label> Password </label>
-				<input type="text" name="password">
-				<br>
-				<input type="submit" style="margin-left: 66%;" value="Log In">
+				<a href="/cancel">Cancel</a> <input type="submit" value="Update">
 			</form>
 		</div>
 		

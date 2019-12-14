@@ -44,7 +44,8 @@ def check(request):
 		logged_user = user[0]
 		if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
 			request.session['userid'] = logged_user.id
-			del request.session['invalid']
+			if 'invalid' in request.session:
+				del request.session['invalid']
 			return redirect('/dashboard')
 		else:
 			request.session['invalid'] = 'Invalid match'
